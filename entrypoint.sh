@@ -22,6 +22,7 @@ then
   CAPTURE_OUTPUT=$(gitleaks --verbose --redact=60 --commits-file=commit_list.txt $CONFIG)
 else
   echo gitleaks detect --verbose --redact=60 "$CONFIG"
+  gitleaks detect --verbose --redact=60 "$CONFIG"
   CAPTURE_OUTPUT=$(gitleaks --verbose --redact=60 "$CONFIG")
 fi
 
