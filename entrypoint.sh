@@ -3,6 +3,8 @@
 INPUT_CONFIG_PATH="$1"
 CONFIG=""
 
+sh -c "git config --global --add safe.directory $PWD"
+
 # check if a custom config have been provided
 if [ -f "$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH" ]; then
   CONFIG=" --config-path=$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH"
