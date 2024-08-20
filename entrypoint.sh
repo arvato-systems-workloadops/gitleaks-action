@@ -14,13 +14,12 @@ echo running gitleaks "$(gitleaks version) with the following command👇"
 
 DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring me or donating a little something\n\e[36mhttps://github.com/sponsors/zricethezav\n\e[36mhttps://www.paypal.me/zricethezav\n"
 
-if [ "$GITHUB_EVENT_NAME" = "push" ]
-then
-  echo gitleaks --verbose --redact=60 "$CONFIG"
-  CAPTURE_OUTPUT=$(gitleaks --verbose --redact=60 "$CONFIG")
-elif [ "$GITHUB_EVENT_NAME" = "pull_request" ]
+if [ "$GITHUB_EVENT_NAME" = "pull_request" ]
 then
   git --git-dir="$GITHUB_WORKSPACE/.git" log --left-right --cherry-pick --pretty=format:"%H" remotes/origin/$GITHUB_BASE_REF... > commit_list.txt
+  echo gitleaks --verbose --redact=60 "$CONFIG"
+  CAPTURE_OUTPUT=$(gitleaks --verbose --redact=60 "$CONFIG")
+else
   echo gitleaks --verbose --redact=60 --commits-file=commit_list.txt $CONFIG
   CAPTURE_OUTPUT=$(gitleaks --verbose --redact=60 --commits-file=commit_list.txt $CONFIG)
 fi
